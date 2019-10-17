@@ -12,11 +12,14 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* -------------------------------------------
+Pokemon Grid 
+---------------------------------------------- */
+
 .pokemon-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   grid-gap: 10px;
-  background-color: pink;
 }
 
 .pokemon {
@@ -28,6 +31,7 @@ body {
   margin: auto;
 }
 
-.pokemon-info {
-
+.pokemon h2 {
+  font-size: 1em;
+  text-align: center;
 }

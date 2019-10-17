@@ -1,6 +1,6 @@
 // NEED A LOADING SCREEN
 
-// LIST ALL POKEMON IN THE KANTO POKEDEX
+// LIST ALL POKEMON IN THE POKEDEX
 const pokedex = 'https://pokeapi.co/api/v2/pokedex/2';
 
 fetch(pokedex)
@@ -15,7 +15,7 @@ fetch(pokedex)
         .then(x => x.json())
         .then(x => {
           // Display Pokemon on the page
-          insertPokemonCard(x.sprites.front_default, x.id);
+          insertPokemonCard(x. name, x.sprites.front_default, x.id);
         })
     })
   })
@@ -23,22 +23,34 @@ fetch(pokedex)
     console.log(err || "this is an error");
   })
 
-function insertPokemonCard(imgUrl, pokemonId) {
+
+/**
+ * Inserts a div onto page with the Pokemon's name and image.
+ * @param {string} name The Pokemon's name.
+ * @param {string} imgUrl The image URL for the Pokemon's default sprite.
+ * @param {number} pokemonId The Pokemon's Pokedex ID.
+ */
+function insertPokemonCard(name, imgUrl, pokemonId) {
 
   // Get parent container
   const parent = document.querySelector('#pokemon-container');
 
-  // 1. Create container
+  // DIV CONTAINER
   const pokemon = document.createElement('div');
   pokemon.className = 'pokemon'
   pokemon.id = pokemonId;
 
-  // 2. Create img element
+  // Create img element
   const pkImg = document.createElement('img');
   pkImg.src = imgUrl;
+  
+  // Add Pokemon name underneath image
+  const pokeName = document.createElement('h2');
+  pokeName.textContent = capitalizeFirstLetter(name);
 
-  // 3. Append image to div
+  // Put div together
   pokemon.appendChild(pkImg);
+  pokemon.appendChild(pokeName);
 
   // Attach onclick event
   pokemon.addEventListener('click', function() {
@@ -49,6 +61,10 @@ function insertPokemonCard(imgUrl, pokemonId) {
   parent.appendChild(pokemon);
 }
 
+/**
+ * Takes a Pokemon ID and then fetches corresponding data in the API.
+ * @param {number} id The Pokemon's Pokedex ID.
+ */
 function displayPokemonInfo(id) {
   let pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + id;
 
@@ -71,4 +87,11 @@ function displayPokemonInfo(id) {
     .catch(err => {
       console.log(err);
     })
+}
+
+// ----------------------------------------------
+// HELPER FUNCTIONS
+// ----------------------------------------------
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
