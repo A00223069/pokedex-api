@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Share+Tech+Mono&display=swap');
 
+/* -------------------------------------------
+VARIABLES
+---------------------------------------------- */
 // Global Colors
 $body-color: lightblue;
+
+// Fonts
+$header-font: 'Share Tech Mono', sans-serif;
+$body-font: 'Open Sans', sans-serif;
 
 // Type colors
 $normal: #a4acaf;
@@ -23,9 +30,9 @@ $dragon: #5e1df7;
 $dark: #707070;
 $fairy: #fdb9e9;
 
-// Fonts
-$header-font: 'Share Tech Mono', sans-serif;
-$body-font: 'Open Sans', sans-serif;
+/* -------------------------------------------
+RESET
+---------------------------------------------- */
 
 * {
   box-sizing: border-box;

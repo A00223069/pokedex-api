@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans|Share+Tech+Mono&display=swap");
+/* -------------------------------------------
+VARIABLES
+---------------------------------------------- */
+/* -------------------------------------------
+RESET
+---------------------------------------------- */
 * {
   box-sizing: border-box;
 }
@@ -12,6 +18,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Share Tech Mono", sans-serif;
 }
 
+/* -------------------------------------------
+Pokemon Card (Homepage)
+---------------------------------------------- */
 .pokemon {
   border-radius: 10px;
   background-color: white;
@@ -26,6 +35,77 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* -------------------------------------------
+Pokemon Details Panel
+---------------------------------------------- */
+.details {
+  background-color: white;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.details .type {
+  margin-right: 5px;
+  border-radius: 5px;
+  padding: 5px 15px 5px 15px;
+  color: white;
+  font-variant: small-caps;
+  font-size: 20px;
+}
+.details .normal {
+  background-color: #a4acaf;
+}
+.details .fighting {
+  background-color: #d56723;
+}
+.details .flying {
+  background-color: #8e6feb;
+}
+.details .poison {
+  background-color: #b97fc9;
+}
+.details .ground {
+  background-color: #dbb54d;
+}
+.details .rock {
+  background-color: #a38c21;
+}
+.details .bug {
+  background-color: #729f3f;
+}
+.details .ghost {
+  background-color: #7b62a3;
+}
+.details .steel {
+  background-color: #9eb7b8;
+}
+.details .fire {
+  background-color: #fd7d24;
+}
+.details .water {
+  background-color: #4592c4;
+}
+.details .grass {
+  background-color: #9bcc50;
+}
+.details .electric {
+  background-color: #eed535;
+}
+.details .psychic {
+  background-color: #f366b9;
+}
+.details .ice {
+  background-color: #51c4e7;
+}
+.details .dragon {
+  background-color: #5e1df7;
+}
+.details .dark {
+  background-color: #707070;
+}
+.details .fairy {
+  background-color: #fdb9e9;
+}
+
+/* -------------------------------------------
 Pokemon Grid (Homepage)
 ---------------------------------------------- */
 .grid-wrapper {
@@ -37,6 +117,36 @@ Pokemon Grid (Homepage)
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   grid-gap: 10px;
+}
+
+/* -------------------------------------------
+Pokemon Details Panel
+---------------------------------------------- */
+.details {
+  margin: 0 auto;
+  width: 70vw;
+  display: grid;
+  grid-gap: 5px;
+  grid-template-areas: "name" "name" "types" "types" "sprite" "base-stats" "profile" "profile" "evo" "evo";
+}
+.details .pk-name {
+  grid-area: name;
+}
+.details .type-wrapper {
+  display: flex;
+  grid-area: types;
+}
+.details .sprite {
+  grid-area: sprite;
+}
+.details .base-stats {
+  grid-area: base-stats;
+}
+.details .profile {
+  grid-area: profile;
+}
+.details .evolution {
+  grid-area: evo;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -11,3 +11,44 @@ Pokemon Grid (Homepage)
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
   grid-gap: 10px;
 }
+
+/* -------------------------------------------
+Pokemon Details Panel
+---------------------------------------------- */
+.details {
+  margin: 0 auto;
+  width: 70vw;
+
+  display: grid;
+  grid-gap: 5px;
+  grid-template-areas: "name"    "name"
+                       "types"   "types"
+                       "sprite"  "base-stats"
+                       "profile" "profile"
+                       "evo"     "evo";
+
+    .pk-name {
+      grid-area: name;
+    }
+
+    .type-wrapper {
+      display: flex;
+      grid-area: types;
+    }
+
+    .sprite {
+      grid-area: sprite;
+    }
+
+    .base-stats {
+      grid-area: base-stats;
+    }
+
+    .profile {
+      grid-area: profile;
+    }
+
+    .evolution {
+      grid-area: evo;
+    }
+}
