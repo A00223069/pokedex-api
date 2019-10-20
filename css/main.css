@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Share+Tech+Mono&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: lightblue;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Share Tech Mono", sans-serif;
+}
+
+.pokemon {
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+.pokemon img {
+  margin: auto;
+}
+.pokemon h2 {
+  font-size: 1em;
+  text-align: center;
+}
+
+/* -------------------------------------------
+Pokemon Grid (Homepage)
+---------------------------------------------- */
+.grid-wrapper {
+  margin: 0 auto;
+  width: 70vw;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  grid-gap: 10px;
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -1,11 +1,32 @@
-// NEED A LOADING SCREEN
+// ----------------------------------------------
+// CONSTANTS
+// ----------------------------------------------
 
-// LIST ALL POKEMON IN THE POKEDEX
-const pokedex = 'https://pokeapi.co/api/v2/pokedex/2';
+// DOM ELEMENTS
+const POKEMON_GRID = document.querySelector('#pokemon-grid');
+const DETAILS_PAGE = document.querySelector('#details');
 
-fetch(pokedex)
+// POKEDEX REGIONS
+const NATIONAL = 1;
+const KANTO = 2;
+const JOHTO = 3;
+const HOENN = 4;
+const SINNOH = 5;
+
+// ----------------------------------------------
+// FETCH API INFO
+// Have to make at least 3 API calls:
+// 1. Pokedex
+// 2. Individual Pokemon
+// 3. Evolution chain
+// ----------------------------------------------
+const pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
+
+// Fetch Pokedex info from API
+fetch(pokedexUrl)
   .then(x => x.json())
   .then(x => {
+
     // Display Pokemon in a list
     x.pokemon_entries.forEach(function(obj) {
       let pokemonURL = "";
@@ -23,7 +44,9 @@ fetch(pokedex)
     console.log(err || "this is an error");
   })
 
-
+// ----------------------------------------------
+// FUNCTIONS
+// ----------------------------------------------
 /**
  * Inserts a div onto page with the Pokemon's name and image.
  * @param {string} name The Pokemon's name.
@@ -33,7 +56,7 @@ fetch(pokedex)
 function insertPokemonCard(name, imgUrl, pokemonId) {
 
   // Get parent container
-  const parent = document.querySelector('#pokemon-container');
+  const parent = POKEMON_GRID;
 
   // DIV CONTAINER
   const pokemon = document.createElement('div');
@@ -80,8 +103,8 @@ function displayPokemonInfo(id) {
       pokemonInfo.appendChild(pokemonName);
 
       // Clear container to PAVE THE WAY FOR INFOOOOOOOOOOOOO
-      document.querySelector('.pokemon-container').style.display = 'none';
-      document.querySelector('.pokemon-info').textContent = x.name;
+      POKEMON_GRID.style.display = 'none';
+      DETAILS_PAGE.textContent = x.name;
 
     })
     .catch(err => {

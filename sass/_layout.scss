@@ -1,0 +1,13 @@
+/* -------------------------------------------
+Pokemon Grid (Homepage)
+---------------------------------------------- */
+.grid-wrapper {
+  margin: 0 auto;
+  width: 70vw;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  grid-gap: 10px;
+}
