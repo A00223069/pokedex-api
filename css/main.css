@@ -41,11 +41,13 @@ Pokemon Details Panel
   background-color: white;
   padding-left: 2em;
   padding-right: 2em;
+  border-radius: 10px;
+  display: none;
 }
 .details .type {
   margin-right: 5px;
   border-radius: 5px;
-  padding: 5px 15px 5px 15px;
+  padding: 3px 10px 3px 10px;
   color: white;
   font-variant: small-caps;
   font-size: 20px;
@@ -123,24 +125,33 @@ Pokemon Grid (Homepage)
 Pokemon Details Panel
 ---------------------------------------------- */
 .details {
+  /* Layout */
   margin: 0 auto;
-  width: 70vw;
+  width: 50vw;
   display: grid;
   grid-gap: 5px;
   grid-template-areas: "name" "name" "types" "types" "sprite" "base-stats" "profile" "profile" "evo" "evo";
+  display: none;
 }
 .details .pk-name {
   grid-area: name;
 }
 .details .type-wrapper {
-  display: flex;
   grid-area: types;
+}
+.details .type-wrapper .type-list {
+  padding: 0;
+  display: flex;
 }
 .details .sprite {
   grid-area: sprite;
 }
 .details .base-stats {
   grid-area: base-stats;
+}
+.details .base-stats ul {
+  list-style-type: none;
+  padding-left: 0;
 }
 .details .profile {
   grid-area: profile;

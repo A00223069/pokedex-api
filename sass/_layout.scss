@@ -16,10 +16,11 @@ Pokemon Grid (Homepage)
 Pokemon Details Panel
 ---------------------------------------------- */
 .details {
-  margin: 0 auto;
-  width: 70vw;
 
-  display: grid;
+  /* Layout */
+  margin: 0 auto;
+  width: 50vw;
+  display: grid; // will be overwritten by display: none 
   grid-gap: 5px;
   grid-template-areas: "name"    "name"
                        "types"   "types"
@@ -27,28 +28,39 @@ Pokemon Details Panel
                        "profile" "profile"
                        "evo"     "evo";
 
-    .pk-name {
-      grid-area: name;
-    }
+  .pk-name {
+    grid-area: name;
+  }
 
-    .type-wrapper {
+  .type-wrapper {
+    grid-area: types;
+
+    .type-list {
+      padding: 0;
       display: flex;
-      grid-area: types;
     }
+  }
 
-    .sprite {
-      grid-area: sprite;
-    }
+  .sprite {
+    grid-area: sprite;
+  }
 
-    .base-stats {
-      grid-area: base-stats;
-    }
+  .base-stats {
+    grid-area: base-stats;
 
-    .profile {
-      grid-area: profile;
+    ul {
+      list-style-type: none;
+      padding-left: 0;
     }
+  }
 
-    .evolution {
-      grid-area: evo;
-    }
+  .profile {
+    grid-area: profile;
+  }
+
+  .evolution {
+    grid-area: evo;
+  }
+
+  display: none;
 }

@@ -1,10 +1,6 @@
-// ----------------------------------------------
-// CONSTANTS
-// ----------------------------------------------
-
 // DOM ELEMENTS
 const POKEMON_GRID = document.querySelector('#pokemon-grid');
-const DETAILS_PAGE = document.querySelector('#details');
+const DETAILS = document.querySelector('#details');
 
 // POKEDEX REGIONS
 const NATIONAL = 1;
@@ -61,9 +57,8 @@ fetch(pokedexUrl)
 
 
 // ----------------------------------------------
-// FUNCTIONS
+// FUNCTION DEFINITIONS
 // ----------------------------------------------
-
 /**
  * Inserts a div onto page with the Pokemon's name and image.
  * @param {string} name The Pokemon's name.
@@ -94,7 +89,7 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
 
   // Attach onclick event
   pokemon.addEventListener('click', function() {
-    displayPokemonInfo(this.id); // What is "this" referring to?????????
+    displayPokemonInfo(this.id);
   });
 
   // Append card to parent div
@@ -106,40 +101,58 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
  * @param {number} id The Pokemon's Pokedex ID.
  */
 function displayPokemonInfo(id) {
+
+  // Get DOM elements
+  const POKEMON_NAME = document.querySelector('#pk-name');
+  const TYPE_LIST = document.querySelector('#type-list');
+  const SPRITE = document.querySelector('#sprite');
+  const STATS = document.querySelector('#stat-list');
+  const PROFILE = document.querySelector('#profile');
+  const EVOLUTION = document.querySelector('#evolution');
+
+  // Make API call to get Pokemon info
   let pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + id;
 
   fetch(pokemonUrl)
     .then(x => x.json())
     .then(x => {
 
-      // Display Pokemon info here
-      let pokemonInfo = document.createElement('div');
-      pokemonInfo.className = 'details-wrapper';
-
       // Name
-      let pokemonName = document.createElement('h1');
-      pokemonName.className = 'name'
-      pokemonName.textContent = x.name;
-      pokemonInfo.appendChild(pokemonName);
+      POKEMON_NAME.textContent = x.name;
 
       // Types
-      let pokemonTypes = document.createElement('div');
-      pokemonTypes.className = "type-wrapper";
-
       x.types.forEach(function(obj) {
         // Create div
         let type = document.createElement('div');
+        let typeName = obj.type.name;
+        type.textContent = typeName;
+
+        // Add class names to style each type div
         type.classList.add('type');
-        type.classList.add('fighting');
-        type.textContent = obj.type.name
-        pokemonTypes.appendChild(type)
+        type.classList.add(typeName);
+
+        // Append types to parent container
+        TYPE_LIST.appendChild(type);
       })
 
-      pokemonInfo.appendChild(pokemonTypes);
+      // Sprite image
+      let img = document.createElement('img');
+      img.src = x.sprites.front_default;
+      SPRITE.appendChild(img);
 
-      // Clear container to PAVE THE WAY FOR INFOOOOOOOOOOOOO
+      // Base Stats
+      x.stats.forEach(function(obj) {
+        let stat = document.createElement('li');
+        stat.textContent = obj.stat.name + ": " + obj.base_stat;
+        STATS.appendChild(stat);
+      })
+
+      // Profile
+      
+
+      // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';
-      DETAILS_PAGE.appendChild(pokemonInfo);
+      DETAILS.style.display = 'grid';
 
     })
     .catch(err => {
