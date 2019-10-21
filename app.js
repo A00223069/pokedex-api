@@ -9,25 +9,10 @@ const JOHTO = 3;
 const HOENN = 4;
 const SINNOH = 5;
 
-// ----------------------------------------------
-// POKEMON CLASS
-// ----------------------------------------------
-class Pokemon {
-  constructor(name, id, sprite) {
-    this.name = name;
-    this.id = id;
-    this.sprite = sprite;
-  }
-}
-
-let pokemonArr = [];
+let pokemonArray = [];
 
 // ----------------------------------------------
 // FETCH API INFO
-// Have to make at least 3 API calls:
-// 1. Pokedex
-// 2. Individual Pokemon
-// 3. Evolution chain (for details page)
 // ----------------------------------------------
 
 const pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
@@ -46,15 +31,16 @@ fetch(pokedexUrl)
         .then(x => x.json())
         .then(x => {
           // Display Pokemon on the page
-          pokemonArr.push(new Pokemon(x.name, x.id, x.sprites.front_default))
+          pokemonArray.push(x);
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
         })
+
     })
+
   })
   .catch(err => {
     console.log(err || "this is an error");
-  })
-
+  });
 
 // ----------------------------------------------
 // FUNCTION DEFINITIONS
@@ -107,7 +93,6 @@ function displayPokemonInfo(id) {
   const TYPE_LIST = document.querySelector('#type-list');
   const SPRITE = document.querySelector('#sprite');
   const STATS = document.querySelector('#stat-list');
-  const PROFILE = document.querySelector('#profile');
   const EVOLUTION = document.querySelector('#evolution');
 
   // Make API call to get Pokemon info
@@ -148,7 +133,32 @@ function displayPokemonInfo(id) {
       })
 
       // Profile
-      
+      // Height
+      document.querySelector('#height').textContent = 'Height: ' + x.height / 10 + ' m';
+
+      // Weight
+      document.querySelector('#weight').textContent = 'Weight: ' + x.weight / 10 + ' kg';
+
+      // Category (will load last...)
+      let speciesUrl = x.species.url;
+
+      fetch(speciesUrl)
+        .then(x => x.json())
+        .then(x => {
+          document.querySelector('#category').textContent = 'Category: ' + x.genera[2].genus;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+
+      // Abilities
+      let abilitiesStr = "Abilities: ";
+      x.abilities.forEach(function(obj) {
+        abilitiesStr += obj.ability.name;
+        abilitiesStr += ", "; // have to remove this on last item
+      })
+      document.querySelector('#abilities').textContent = abilitiesStr;
 
       // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';
@@ -169,7 +179,6 @@ function capitalizeFirstLetter(string) {
 
 function sortById(pokemonArray) {
   pokemonArray.sort(function(a, b) {
-
     let numA = Number(a.id);
     let numB = Number(b.id);
 

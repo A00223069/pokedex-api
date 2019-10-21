@@ -28,17 +28,32 @@ Pokemon Details Panel
   padding-right: 2em;
   border-radius: 10px;
 
-  display: none;
+  h1, h2 {
+    background-color: darkslategrey;
+    padding: 10px;
+    color: white;
+    font-weight: normal;
+  }
+
+  h1 {
+    text-transform: uppercase;
+  }
 
   .type {
-    margin-right: 5px;
-
     border-radius: 5px;
     padding: 3px 10px 3px 10px;
     color: white;
 
     font-variant: small-caps;
     font-size: 20px;
+  }
+
+  .profile-list {
+
+    .profile-title {
+      font-weight: bold;
+    }
+
   }
 
   .normal {

@@ -18,6 +18,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Share Tech Mono", sans-serif;
 }
 
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 /* -------------------------------------------
 Pokemon Card (Homepage)
 ---------------------------------------------- */
@@ -42,15 +47,25 @@ Pokemon Details Panel
   padding-left: 2em;
   padding-right: 2em;
   border-radius: 10px;
-  display: none;
+}
+.details h1, .details h2 {
+  background-color: darkslategrey;
+  padding: 10px;
+  color: white;
+  font-weight: normal;
+}
+.details h1 {
+  text-transform: uppercase;
 }
 .details .type {
-  margin-right: 5px;
   border-radius: 5px;
   padding: 3px 10px 3px 10px;
   color: white;
   font-variant: small-caps;
   font-size: 20px;
+}
+.details .profile-list .profile-title {
+  font-weight: bold;
 }
 .details .normal {
   background-color: #a4acaf;
@@ -125,12 +140,12 @@ Pokemon Grid (Homepage)
 Pokemon Details Panel
 ---------------------------------------------- */
 .details {
-  /* Layout */
   margin: 0 auto;
-  width: 50vw;
+  width: 30vw;
   display: grid;
   grid-gap: 5px;
-  grid-template-areas: "name" "name" "types" "types" "sprite" "base-stats" "profile" "profile" "evo" "evo";
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "name    name" "sprite  types" "sprite  base-stats" "profile profile" "evo     evo";
   display: none;
 }
 .details .pk-name {
@@ -143,18 +158,36 @@ Pokemon Details Panel
   padding: 0;
   display: flex;
 }
+.details .type-wrapper .type {
+  margin-right: 5px;
+}
 .details .sprite {
   grid-area: sprite;
+  justify-self: center;
+  align-self: center;
 }
 .details .base-stats {
   grid-area: base-stats;
 }
-.details .base-stats ul {
-  list-style-type: none;
-  padding-left: 0;
-}
 .details .profile {
   grid-area: profile;
+}
+.details .profile .profile-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "height    category" "weight    abilities";
+}
+.details .profile .profile-list .height {
+  grid-area: height;
+}
+.details .profile .profile-list .weight {
+  grid-area: weight;
+}
+.details .profile .profile-list .abilities {
+  grid-area: abilities;
+}
+.details .profile .profile-list .category {
+  grid-area: category;
 }
 .details .evolution {
   grid-area: evo;
