@@ -32,9 +32,11 @@ fetch(pokedexUrl)
       fetch(pokemonURL)
         .then(x => x.json())
         .then(x => {
+
           // Display Pokemon on the page
           pokemonArray.push(x);
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
+
         })
         .catch(err => {
           console.log(err);
@@ -59,7 +61,7 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
   // Get parent container
   const parent = POKEMON_GRID;
 
-  // DIV CONTAINER
+  // Create div container for Pokemon
   const pokemon = document.createElement('div');
   pokemon.className = 'pokemon'
   pokemon.id = pokemonId;
@@ -86,7 +88,7 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
 }
 
 /**
- * Takes a Pokemon ID and then fetches API data to fill out a details page.
+ * Takes a Pokemon ID and then fetches API data to fill out a details section.
  * @param {number} id The Pokemon's Pokedex ID.
  */
 function displayPokemonInfo(id) {
@@ -120,11 +122,11 @@ function displayPokemonInfo(id) {
         // Create div
         let type = document.createElement('div');
         let typeName = obj.type.name;
-        type.textContent = typeName;
+        type.textContent = typeName; 
 
         // Add class names to style each type div
         type.classList.add('type');
-        type.classList.add(typeName); // for type color
+        type.classList.add(typeName); // To apply color to div
 
         // Append types to parent container
         TYPE_LIST.appendChild(type);
@@ -175,6 +177,7 @@ function displayPokemonInfo(id) {
 
               // Accessing the Pokemon Evolution Chain in the Pokemon API
               // Credit: https://stackoverflow.com/questions/39112862/pokeapi-angular-how-to-get-pokemons-evolution-chain
+              // Note: This won't return multiple types of evolution properly (e.g. Eevee -> Jolteon/Vaporeon/Flareon/etc). Currently only works for evolution triggered by leveling up.
 
               let evoChain = [];
               let evoData = x.chain;
@@ -193,15 +196,15 @@ function displayPokemonInfo(id) {
 
               console.log(evoChain);
 
-              // Loop through evoChain array to populate EVOLUTION section
-              // Bug: will throw an error and not display if any pokemon in the evolution chain isn't included in current pokedex (because it wasn't added to global pokemonArray in initial API call)
+              // Loop through evoChain array to populate EVOLUTION section.
+              // Note: Will throw an error and not display if any Pokemon in the evolution chain isn't included in current pokedex (because it wasn't added to global pokemonArray in initial API call).
               evoChain.forEach(function(evo) {
 
                 const evoDiv = document.createElement('div');
                 evoDiv.className = 'pokemon';
 
                 // Get sprites for each evolution stage 
-                const pokemon = pokemonArray.filter(x => x.name === evo.species_name); // returns undefined if evoChain includes a Pokemon not in pokemonArray
+                const pokemon = pokemonArray.filter(x => x.name === evo.species_name); // Returns undefined if evoChain includes a Pokemon not in pokemonArray
                 const evoImg = document.createElement('img');
                 evoImg.src = pokemon[0].sprites.front_default; 
 
@@ -216,7 +219,7 @@ function displayPokemonInfo(id) {
               })
             })
             .catch(err => {
-              let errorString = "This Pokemon evolves to/from a Pokemon that isn't included in the current (" + currentPokedex + ") Pokedex." // lol
+              let errorString = "This Pokemon evolves to/from a Pokemon that isn't included in the current Pokedex." // lol
               EVOLUTION.innerHTML = errorString;
               console.log(err);
             })
@@ -229,7 +232,7 @@ function displayPokemonInfo(id) {
       // Abilities
       let abilitiesStr = [];
       x.abilities.forEach(function(obj) {
-        abilitiesStr.push(obj.ability.name)
+        abilitiesStr.push(obj.ability.name);
       })
       document.querySelector('#abilities .attr-value').textContent = abilitiesStr.join(', ');
 
