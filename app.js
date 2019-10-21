@@ -17,14 +17,12 @@ let pokemonArray = [];
 
 let pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
 
-// Set title in homepage to current Pokedex region
-let currentPokedex = 'Kanto'; 
-POKEDEX_REGION.textContent = currentPokedex;
-
 // Fetch Pokedex info from API
 fetch(pokedexUrl)
   .then(x => x.json())
   .then(x => {
+    // Get name of Pokedex to display in header
+    POKEDEX_REGION.textContent = capitalizeFirstLetter(x.name);
 
     // Fetch all Pokemon from Pokedex and display on page
     x.pokemon_entries.forEach(function(obj) {
@@ -140,9 +138,15 @@ function displayPokemonInfo(id) {
 
       // Base Stats
       x.stats.forEach(function(obj) {
-        let stat = document.createElement('li');
-        stat.textContent = obj.stat.name + ": " + obj.base_stat;
-        STATS.appendChild(stat);
+
+        // Create separate <li> elements for grid positioning (two columns)
+        let statLabel = document.createElement('li');
+        statLabel.textContent = obj.stat.name + ": ";
+        STATS.appendChild(statLabel);
+        
+        let statAttr = document.createElement('li');
+        statAttr.textContent = obj.base_stat;
+        STATS.appendChild(statAttr);
       })
 
       // Profile
@@ -152,10 +156,9 @@ function displayPokemonInfo(id) {
       // Weight
       document.querySelector('#weight').textContent = 'Weight: ' + x.weight / 10 + ' kg';
 
-      // Category & Evolution (loads after everything else because of extra API call)
+      // Make another API call to get additional info not included in v2/pokemon/{id} endpoint
       const speciesUrl = x.species.url;
 
-      // Make another API call to get additional info not included in v2/pokemon/{id} endpoint
       fetch(speciesUrl)
         .then(x => x.json())
         .then(x => {
@@ -170,14 +173,14 @@ function displayPokemonInfo(id) {
             .then(x => x.json())
             .then(x => {
 
-              // How to access Pokemon Evolution Chain in the Pokemon API
+              // Accessing the Pokemon Evolution Chain in the Pokemon API
               // Credit: https://stackoverflow.com/questions/39112862/pokeapi-angular-how-to-get-pokemons-evolution-chain
 
-              var evoChain = [];
-              var evoData = x.chain;
+              let evoChain = [];
+              let evoData = x.chain;
 
               do {
-                var evoDetails = evoData['evolution_details'][0];
+                let evoDetails = evoData['evolution_details'][0];
                 evoChain.push({
                   "species_name": evoData.species.name,
                   "min_level": !evoDetails ? 1 : evoDetails.min_level,
@@ -243,6 +246,10 @@ function displayPokemonInfo(id) {
 // ----------------------------------------------
 // HELPER FUNCTIONS
 // ----------------------------------------------
+/**
+ * Capitalizes the first letter of a string.
+ * @param {string} string 
+ */
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

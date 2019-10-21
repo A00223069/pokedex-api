@@ -191,6 +191,10 @@ Pokemon Details Panel
 .details .base-stats {
   grid-area: base-stats;
 }
+.details .base-stats .stat-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .details .profile {
   grid-area: profile;
 }
