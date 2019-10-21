@@ -1,6 +1,7 @@
 // DOM ELEMENTS
 const POKEMON_GRID = document.querySelector('#pokemon-grid');
 const DETAILS = document.querySelector('#details');
+const POKEDEX_REGION = document.querySelector('#current-pokedex');
 
 // POKEDEX REGIONS
 const NATIONAL = 1;
@@ -9,20 +10,23 @@ const JOHTO = 3;
 const HOENN = 4;
 const SINNOH = 5;
 
-let pokemonArray = [];
-
 // ----------------------------------------------
 // FETCH API INFO
 // ----------------------------------------------
+let pokemonArray = [];
 
 const pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
+
+// Set title in homepage to current Pokedex region
+let currentPokedex = 'Kanto';
+POKEDEX_REGION.textContent = currentPokedex;
 
 // Fetch Pokedex info from API
 fetch(pokedexUrl)
   .then(x => x.json())
   .then(x => {
 
-    // Display Pokemon in a list
+    // Fetch all Pokemon from Pokedex and display on page
     x.pokemon_entries.forEach(function(obj) {
       let pokemonURL = "";
       pokemonURL = 'https://pokeapi.co/api/v2/pokemon/' + obj.entry_number;
@@ -33,6 +37,9 @@ fetch(pokedexUrl)
           // Display Pokemon on the page
           pokemonArray.push(x);
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
+        })
+        .catch(err => {
+          console.log(err);
         })
     })
   })
@@ -145,7 +152,7 @@ function displayPokemonInfo(id) {
       // Weight
       document.querySelector('#weight').textContent = 'Weight: ' + x.weight / 10 + ' kg';
 
-      // Category & Evolution (loads slowly)
+      // Category & Evolution (loads after everything else because of extra API call)
       const speciesUrl = x.species.url;
 
       // Make another API call to get additional info not included in v2/pokemon/{id} endpoint
@@ -178,24 +185,33 @@ function displayPokemonInfo(id) {
                 evoData = evoData['evolves_to'][0]; // update evoData variable to access nested "evolves_to" property
               } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
 
+              console.log(evoChain);
+
               // Populate EVOLUTION section
+              // Bug: will throw an error and not display if any pokemon in the evolution chain isn't included in current pokedex (because it wasn't added to global pokemonArray in initial API call)
               evoChain.forEach(function(evo) {
 
-                // Get sprites for each evolution stage
-                const pokemon = pokemonArray.filter(x => x.name === evo.species_name);
-                let evoDiv = document.createElement('div');
-                evoDiv.className = 'pokemon'
-                let evoImg = document.createElement('img');
-                evoImg.src = pokemon[0].sprites.front_default;
-                let evoName = document.createElement('h3');
+                const evoDiv = document.createElement('div');
+                evoDiv.className = 'pokemon';
+
+                // Get sprites for each evolution stage 
+                const pokemon = pokemonArray.filter(x => x.name === evo.species_name); // returns undefined if evoChain includes a Pokemon not in pokemonArray
+                const evoImg = document.createElement('img');
+                evoImg.src = pokemon[0].sprites.front_default; 
+
+                // Get name
+                const evoName = document.createElement('h3');
                 evoName.textContent = evo.species_name;
 
+                // Append everything
                 evoDiv.appendChild(evoImg);
                 evoDiv.appendChild(evoName);
                 EVOLUTION.appendChild(evoDiv);
               })
             })
             .catch(err => {
+              let errorString = "This Pokemon evolves to/from a Pokemon that isn't included in the current (" + currentPokedex + ") Pokedex." // lol
+              EVOLUTION.innerHTML = errorString;
               console.log(err)
             })
         })
@@ -228,6 +244,20 @@ function displayPokemonInfo(id) {
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+function sortById(pokemonArray) {
+  pokemonArray.sort(function(a, b) {
+    let numA = Number(a.id);
+    let numB = Number(b.id);
+
+    if (numA < numB) {
+      return -1;
+    }
+    else {
+      return 1;
+    }
+  })
+} 
 
 // ----------------------------------------------
 // EVENT HANDLERS
