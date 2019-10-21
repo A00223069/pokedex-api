@@ -33,9 +33,7 @@ fetch(pokedexUrl)
           // Display Pokemon on the page
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
         })
-
     })
-
   })
   .catch(err => {
     console.log(err || "this is an error");
@@ -82,7 +80,7 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
 }
 
 /**
- * Takes a Pokemon ID and then fetches corresponding data in the API.
+ * Takes a Pokemon ID and then fetches API data to fill out a details page.
  * @param {number} id The Pokemon's Pokedex ID.
  */
 function displayPokemonInfo(id) {
@@ -119,7 +117,7 @@ function displayPokemonInfo(id) {
 
         // Add class names to style each type div
         type.classList.add('type');
-        type.classList.add(typeName);
+        type.classList.add(typeName); // for type color
 
         // Append types to parent container
         TYPE_LIST.appendChild(type);
@@ -128,6 +126,7 @@ function displayPokemonInfo(id) {
       // Sprite image
       let img = document.createElement('img');
       img.src = x.sprites.front_default;
+      img.alt = x.name;
       SPRITE.appendChild(img);
 
       // Base Stats
@@ -158,12 +157,11 @@ function displayPokemonInfo(id) {
 
 
       // Abilities
-      let abilitiesStr = "Abilities: ";
+      let abilitiesStr = [];
       x.abilities.forEach(function(obj) {
-        abilitiesStr += obj.ability.name;
-        abilitiesStr += ", "; // have to remove this on last item
+        abilitiesStr.push(obj.ability.name)
       })
-      document.querySelector('#abilities').textContent = abilitiesStr;
+      document.querySelector('#abilities').textContent = 'Abilities: ' + abilitiesStr.join(', ');
 
       // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';
