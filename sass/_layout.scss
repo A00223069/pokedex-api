@@ -85,6 +85,7 @@ Pokemon Details Panel
     .profile-list {
 
       display: grid;
+      grid-gap: 10px;
       grid-template-columns: 1fr 1fr;
       grid-template-areas:
       "height    category"
@@ -92,15 +93,25 @@ Pokemon Details Panel
 
       .height {
         grid-area: height;
+        margin-left: 5px;
       }
       .weight {
         grid-area: weight;
+        margin-left: 5px;
       }
       .abilities {
         grid-area: abilities;
       }
       .category {
         grid-area: category;
+      }
+
+      .attr-label {
+        color: darkslategrey;
+        font-size: 15px;
+      }
+      .attr-value {
+        font-size: 20px;
       }
     }
   }

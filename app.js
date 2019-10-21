@@ -151,10 +151,10 @@ function displayPokemonInfo(id) {
 
       // Profile
       // Height
-      document.querySelector('#height').textContent = 'Height: ' + x.height / 10 + ' m';
+      document.querySelector('#height .attr-value').textContent = x.height / 10 + ' m';
 
       // Weight
-      document.querySelector('#weight').textContent = 'Weight: ' + x.weight / 10 + ' kg';
+      document.querySelector('#weight .attr-value').textContent = x.weight / 10 + ' kg';
 
       // Make another API call to get additional info not included in v2/pokemon/{id} endpoint
       const speciesUrl = x.species.url;
@@ -164,7 +164,7 @@ function displayPokemonInfo(id) {
         .then(x => {
 
           // Set category
-          document.querySelector('#category').textContent = 'Category: ' + x.genera[2].genus;
+          document.querySelector('#category .attr-value').textContent = x.genera[2].genus;
 
           // Need to make separate API call to retrieve the evolution chain of a Pokemon
           const evolutionUrl = x.evolution_chain.url;
@@ -231,7 +231,7 @@ function displayPokemonInfo(id) {
       x.abilities.forEach(function(obj) {
         abilitiesStr.push(obj.ability.name)
       })
-      document.querySelector('#abilities').textContent = 'Abilities: ' + abilitiesStr.join(', ');
+      document.querySelector('#abilities .attr-value').textContent = abilitiesStr.join(', ');
 
       // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';

@@ -56,6 +56,7 @@ Pokemon Details Panel
   font-weight: normal;
 }
 .details h1 {
+  margin-bottom: 0;
   text-transform: uppercase;
   text-align: center;
 }
@@ -200,20 +201,30 @@ Pokemon Details Panel
 }
 .details .profile .profile-list {
   display: grid;
+  grid-gap: 10px;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "height    category" "weight    abilities";
 }
 .details .profile .profile-list .height {
   grid-area: height;
+  margin-left: 5px;
 }
 .details .profile .profile-list .weight {
   grid-area: weight;
+  margin-left: 5px;
 }
 .details .profile .profile-list .abilities {
   grid-area: abilities;
 }
 .details .profile .profile-list .category {
   grid-area: category;
+}
+.details .profile .profile-list .attr-label {
+  color: darkslategrey;
+  font-size: 15px;
+}
+.details .profile .profile-list .attr-value {
+  font-size: 20px;
 }
 .details .evolution {
   grid-area: evo;
