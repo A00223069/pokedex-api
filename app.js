@@ -15,10 +15,10 @@ const SINNOH = 5;
 // ----------------------------------------------
 let pokemonArray = [];
 
-const pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
+let pokedexUrl = 'https://pokeapi.co/api/v2/pokedex/' + KANTO;
 
 // Set title in homepage to current Pokedex region
-let currentPokedex = 'Kanto';
+let currentPokedex = 'Kanto'; 
 POKEDEX_REGION.textContent = currentPokedex;
 
 // Fetch Pokedex info from API
@@ -159,8 +159,11 @@ function displayPokemonInfo(id) {
       fetch(speciesUrl)
         .then(x => x.json())
         .then(x => {
+
+          // Set category
           document.querySelector('#category').textContent = 'Category: ' + x.genera[2].genus;
 
+          // Need to make separate API call to retrieve the evolution chain of a Pokemon
           const evolutionUrl = x.evolution_chain.url;
 
           fetch(evolutionUrl)
@@ -187,7 +190,7 @@ function displayPokemonInfo(id) {
 
               console.log(evoChain);
 
-              // Populate EVOLUTION section
+              // Loop through evoChain array to populate EVOLUTION section
               // Bug: will throw an error and not display if any pokemon in the evolution chain isn't included in current pokedex (because it wasn't added to global pokemonArray in initial API call)
               evoChain.forEach(function(evo) {
 
@@ -212,7 +215,7 @@ function displayPokemonInfo(id) {
             .catch(err => {
               let errorString = "This Pokemon evolves to/from a Pokemon that isn't included in the current (" + currentPokedex + ") Pokedex." // lol
               EVOLUTION.innerHTML = errorString;
-              console.log(err)
+              console.log(err);
             })
         })
         .catch(err => {
@@ -226,7 +229,6 @@ function displayPokemonInfo(id) {
         abilitiesStr.push(obj.ability.name)
       })
       document.querySelector('#abilities').textContent = 'Abilities: ' + abilitiesStr.join(', ');
-
 
       // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';
@@ -245,6 +247,11 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+/**
+ * Takes an array and sorts it by increasing ID values.
+ * (Wanted to use this to display the Pokemon in order on the homepage, but had trouble making it run after the first fetch() call)
+ * @param {object} pokemonArray 
+ */
 function sortById(pokemonArray) {
   pokemonArray.sort(function(a, b) {
     let numA = Number(a.id);

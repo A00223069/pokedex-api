@@ -57,6 +57,7 @@ Pokemon Details Panel
 }
 .details h1 {
   text-transform: uppercase;
+  text-align: center;
 }
 .details .type {
   border-radius: 5px;
