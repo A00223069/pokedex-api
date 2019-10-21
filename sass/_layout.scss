@@ -16,17 +16,31 @@ Pokemon Grid (Homepage)
 Pokemon Details Panel
 ---------------------------------------------- */
 .details {
+  position: relative;
   margin: 0 auto;
-  width: 30vw;
+  width: 40vw;
   display: grid; // will be overwritten by display: none 
   grid-gap: 5px;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
-    "name    name"
-    "sprite  types"
-    "sprite  base-stats"
-    "profile profile"
-    "evo     evo";
+    "name     name"
+    "sprite   types"
+    "sprite   base-stats"
+    "profile  profile"
+    "evo      evo";
+
+  .back-button {
+    background: url('../assets/left-arrow.svg');
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: -200px;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+    }
+  }
 
   .pk-name {
     grid-area: name;

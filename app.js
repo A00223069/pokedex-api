@@ -31,7 +31,6 @@ fetch(pokedexUrl)
         .then(x => x.json())
         .then(x => {
           // Display Pokemon on the page
-          pokemonArray.push(x);
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
         })
 
@@ -94,6 +93,12 @@ function displayPokemonInfo(id) {
   const SPRITE = document.querySelector('#sprite');
   const STATS = document.querySelector('#stat-list');
   const EVOLUTION = document.querySelector('#evolution');
+
+  // Clear elements before populating with API data
+  POKEMON_NAME.innerHTML = "";
+  TYPE_LIST.innerHTML = "";
+  SPRITE.innerHTML = "";
+  STATS.innerHTML = "";
 
   // Make API call to get Pokemon info
   let pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + id;
@@ -177,16 +182,14 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function sortById(pokemonArray) {
-  pokemonArray.sort(function(a, b) {
-    let numA = Number(a.id);
-    let numB = Number(b.id);
+// ----------------------------------------------
+// EVENT HANDLERS
+// ----------------------------------------------
 
-    if (numA < numB) {
-      return -1;
-    }
-    else {
-      return 1;
-    }
-  })
-}
+// Back button
+const backButton = document.querySelector("#back-button");
+
+backButton.addEventListener('click', function() {
+  document.querySelector("#grid-wrapper").style.display = 'block';
+  DETAILS.style.display = 'none';
+})
