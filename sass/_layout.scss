@@ -97,6 +97,11 @@ Pokemon Details Panel
 
   .evolution {
     grid-area: evo;
+
+    .evolution-list {
+      display: flex;
+      justify-content: space-evenly;
+    }
   }
 
   display: none;

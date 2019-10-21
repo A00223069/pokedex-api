@@ -31,6 +31,7 @@ fetch(pokedexUrl)
         .then(x => x.json())
         .then(x => {
           // Display Pokemon on the page
+          pokemonArray.push(x);
           insertPokemonCard(x.name, x.id, x.sprites.front_default);
         })
     })
@@ -90,13 +91,14 @@ function displayPokemonInfo(id) {
   const TYPE_LIST = document.querySelector('#type-list');
   const SPRITE = document.querySelector('#sprite');
   const STATS = document.querySelector('#stat-list');
-  const EVOLUTION = document.querySelector('#evolution');
+  const EVOLUTION = document.querySelector('#evolution-list');
 
   // Clear elements before populating with API data
   POKEMON_NAME.innerHTML = "";
   TYPE_LIST.innerHTML = "";
   SPRITE.innerHTML = "";
   STATS.innerHTML = "";
+  EVOLUTION.innerHTML = "";
 
   // Make API call to get Pokemon info
   let pokemonUrl = 'https://pokeapi.co/api/v2/pokemon/' + id;
@@ -143,13 +145,59 @@ function displayPokemonInfo(id) {
       // Weight
       document.querySelector('#weight').textContent = 'Weight: ' + x.weight / 10 + ' kg';
 
-      // Category (will load last...)
-      let speciesUrl = x.species.url;
+      // Category & Evolution (loads slowly)
+      const speciesUrl = x.species.url;
 
+      // Make another API call to get additional info not included in v2/pokemon/{id} endpoint
       fetch(speciesUrl)
         .then(x => x.json())
         .then(x => {
           document.querySelector('#category').textContent = 'Category: ' + x.genera[2].genus;
+
+          const evolutionUrl = x.evolution_chain.url;
+
+          fetch(evolutionUrl)
+            .then(x => x.json())
+            .then(x => {
+
+              // How to access Pokemon Evolution Chain in the Pokemon API
+              // Credit: https://stackoverflow.com/questions/39112862/pokeapi-angular-how-to-get-pokemons-evolution-chain
+
+              var evoChain = [];
+              var evoData = x.chain;
+
+              do {
+                var evoDetails = evoData['evolution_details'][0];
+                evoChain.push({
+                  "species_name": evoData.species.name,
+                  "min_level": !evoDetails ? 1 : evoDetails.min_level,
+                  "trigger_name": !evoDetails ? null : evoDetails.trigger.name,
+                  "item": !evoDetails ? null : evoDetails.item
+                });
+
+                evoData = evoData['evolves_to'][0]; // update evoData variable to access nested "evolves_to" property
+              } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+
+              // Populate EVOLUTION section
+              evoChain.forEach(function(evo) {
+
+                // Get sprites for each evolution stage
+                const pokemon = pokemonArray.filter(x => x.name === evo.species_name);
+                let evoDiv = document.createElement('div');
+                evoDiv.className = 'pokemon'
+                let evoImg = document.createElement('img');
+                evoImg.src = pokemon[0].sprites.front_default;
+                let evoName = document.createElement('h3');
+                evoName.textContent = evo.species_name;
+
+                evoDiv.appendChild(evoImg);
+                evoDiv.appendChild(evoName);
+                EVOLUTION.appendChild(evoDiv);
+              })
+            })
+            .catch(err => {
+              console.log(err)
+            })
         })
         .catch(err => {
           console.log(err);
@@ -162,6 +210,7 @@ function displayPokemonInfo(id) {
         abilitiesStr.push(obj.ability.name)
       })
       document.querySelector('#abilities').textContent = 'Abilities: ' + abilitiesStr.join(', ');
+
 
       // Clear page and display info
       document.querySelector('.grid-wrapper').style.display = 'none';
