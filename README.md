@@ -7,4 +7,4 @@ The homepage displays the Kanto Pokedex by default. This can be changed in line 
 
 ## Known issues
 - Pokemon list on the homepage isn't ordered properly, possibly because the `<div>` elements are being generated asynchronously inside a fetch() function. Tried to fix this with a sort function on `pokemonArray` before displaying the Pokemon, but couldn't get it to run consistently after the first fetch() call.
-- Evolution chain won't display at all if it includes any Pokemon that wasn't retrieved in the first API call (e.g. Jynx evolves from Smoochum, but Smoochum wasn't included in `pokemonArray` during the first API fetch, so the code as it is won't work to display the evo chain)
+- Evolution chain won't display at all if it includes any Pokemon that wasn't retrieved in the first API call (e.g. Jynx evolves from Smoochum, but Smoochum wasn't included in `pokemonArray` during the first API fetch (because it's not part of the Kanto Pokedex), so the code as it is won't work to display the evo chain)
