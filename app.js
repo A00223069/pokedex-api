@@ -80,6 +80,7 @@ function insertPokemonCard(name, pokemonId, imgUrl) {
 
   // Attach onclick event
   pokemon.addEventListener('click', function() {
+    window.scrollTo(0, 0);
     displayPokemonInfo(this.id);
   });
 
