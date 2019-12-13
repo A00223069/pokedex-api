@@ -234,15 +234,24 @@ Pokemon Details Panel
   justify-content: space-evenly;
 }
 
-@media (max-width: 730px) {
+@media (max-width: 768px) {
   .details {
-    width: 90vw;
+    margin: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
     grid-template-columns: 1fr;
     grid-template-areas: "name" "sprite" "types" "base-stats" "profile" "evo ";
   }
   .details .back-button {
     left: 0px;
     top: 1100px;
+  }
+}
+@media (max-width: 320px) {
+  .details {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 
