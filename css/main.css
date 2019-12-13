@@ -241,7 +241,7 @@ Pokemon Details Panel
     grid-template-areas: "name" "sprite" "types" "base-stats" "profile" "evo ";
   }
   .details .back-button {
-    left: 250px;
+    left: 0px;
     top: 1100px;
   }
 }
