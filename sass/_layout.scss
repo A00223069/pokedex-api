@@ -40,7 +40,7 @@ Pokemon Details Panel
     width: 90px;
     height: 90px;
     left: -200px;
-
+    
     &:hover {
       background-color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
@@ -126,4 +126,25 @@ Pokemon Details Panel
   }
 
   display: none;
+}
+
+@media (max-width: 730px) {
+  .details {
+    width: 90vw;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "name"
+      "sprite"   
+      "types"
+      "base-stats"
+      "profile"
+      "evo ";
+
+      .back-button {
+        left: 250px;
+        top: 1100px;
+      }
+  }
+
+  
 }
